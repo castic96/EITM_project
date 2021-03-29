@@ -13,6 +13,7 @@ import { LoginPageComponent } from './components/pages/login-page/login-page.com
 import { RegisterPageComponent } from './components/pages/register-page/register-page.component';
 import { MatInputModule } from '@angular/material/input';
 import { SecretPageComponent } from './components/pages/secret-page/secret-page.component';
+import { WebcamModule } from 'ngx-webcam';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { SecretPageComponent } from './components/pages/secret-page/secret-page.
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    WebcamModule
   ],
   providers: [],
   bootstrap: [AppComponent]
