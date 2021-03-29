@@ -12,6 +12,7 @@ import { HomePageComponent } from './components/pages/home-page/home-page.compon
 import { LoginPageComponent } from './components/pages/login-page/login-page.component';
 import { RegisterPageComponent } from './components/pages/register-page/register-page.component';
 import { MatInputModule } from '@angular/material/input';
+import { SecretPageComponent } from './components/pages/secret-page/secret-page.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MatInputModule } from '@angular/material/input';
     NavbarComponent,
     HomePageComponent,
     LoginPageComponent,
-    RegisterPageComponent
+    RegisterPageComponent,
+    SecretPageComponent
   ],
   imports: [
     BrowserModule,
