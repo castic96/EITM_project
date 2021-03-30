@@ -7,7 +7,7 @@ import {User} from '../../model/User';
 export class UserAuthenticatorService {
 
   private localStorageKey = 'loggedUser';
-  loggedUser = null;
+  loggedUser: User = new User('', '', new Date());
   isLogged = false;
 
   constructor() {
@@ -22,12 +22,10 @@ export class UserAuthenticatorService {
       console.log('Logged: TRUE');
     } else {
       this.isLogged = false;
-      this.loggedUser = null;
     }
   }
 
   logOut(): void {
-    this.loggedUser = null;
     this.isLogged = false;
     localStorage.clear();
   }

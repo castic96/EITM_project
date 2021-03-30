@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserAuthenticatorService } from '../../services/user-authenticator/user-authenticator.service';
+import {User} from '../../model/User';
 
 @Component({
   selector: 'app-navbar',
@@ -21,7 +22,7 @@ export class NavbarComponent implements OnInit {
   getLoggedUserInitials(): string {
     const loggedUser = this.userAuthenticatorService.loggedUser;
     if (loggedUser !== null) {
-      return 'UU';
+      return loggedUser.firstName.toLocaleUpperCase().charAt(0) + loggedUser.lastName.toLocaleUpperCase().charAt(0);
     } else {
       return '';
     }
