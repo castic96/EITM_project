@@ -7,6 +7,14 @@
   </div>
   <div class="spacer"></div>
   <a routerLink="" mat-button><h1>Home</h1></a>
-  <a routerLink="/login" mat-button><h1>Login</h1></a>
-  <a routerLink="/register" mat-raised-button color="accent"><h1>Register</h1></a>
+  <div *ngIf="!showLoggedUserMenu()">
+    <a routerLink="/login" mat-button><h1>Login</h1></a>
+    <a routerLink="/register" mat-raised-button color="accent"><h1>Register</h1></a>
+  </div>
+  <div *ngIf="showLoggedUserMenu()">
+    <a routerLink="/secret" mat-button><h1>Secret</h1></a>
+    <a routerLink="" (click)="logOut()" mat-button><h1>Logout</h1></a>
+    <span class="user-circle">{{getLoggedUserInitials()}}</span>
+  </div>
+
 </mat-toolbar>

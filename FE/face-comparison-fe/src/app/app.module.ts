@@ -14,6 +14,7 @@ import { RegisterPageComponent } from './components/pages/register-page/register
 import { MatInputModule } from '@angular/material/input';
 import { SecretPageComponent } from './components/pages/secret-page/secret-page.component';
 import { WebcamModule } from 'ngx-webcam';
+import { UserAuthenticatorService } from './services/user-authenticator/user-authenticator.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { WebcamModule } from 'ngx-webcam';
     MatInputModule,
     WebcamModule
   ],
-  providers: [],
+  providers: [UserAuthenticatorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

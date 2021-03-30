@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserAuthenticatorService } from '../../../services/user-authenticator/user-authenticator.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-secret-page',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SecretPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userAuthenticatorService: UserAuthenticatorService, private router: Router) { }
 
   ngOnInit(): void {
+    console.log('secret page');
+    console.log(this.userAuthenticatorService.isLogged);
+    if (!this.userAuthenticatorService.isLogged) {
+      this.router.navigate(['/', 'login']);
+    }
   }
 
 }
