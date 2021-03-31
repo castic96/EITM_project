@@ -1,9 +1,8 @@
 package cz.zcu.kiv.eitm.facecomparisonbe.service;
 
-import cz.zcu.kiv.eitm.facecomparisonbe.model.Result;
-import cz.zcu.kiv.eitm.facecomparisonbe.model.User;
+import cz.zcu.kiv.eitm.facecomparisonbe.dto.LoginResponse;
 
 public interface AuthoriseService {
 
-    Result authorise(User user, User userDb);
+    LoginResponse authorise(String userList, String image);
 }

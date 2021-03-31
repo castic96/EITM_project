@@ -1,13 +1,18 @@
 package cz.zcu.kiv.eitm.facecomparisonbe.controller;
 
-import cz.zcu.kiv.eitm.facecomparisonbe.model.Result;
+import cz.zcu.kiv.eitm.facecomparisonbe.dto.LoginRequest;
+import cz.zcu.kiv.eitm.facecomparisonbe.dto.LoginResponse;
+import cz.zcu.kiv.eitm.facecomparisonbe.dto.RegisterRequest;
+import cz.zcu.kiv.eitm.facecomparisonbe.dto.RegisterResponse;
 import cz.zcu.kiv.eitm.facecomparisonbe.model.User;
 import cz.zcu.kiv.eitm.facecomparisonbe.service.AuthoriseService;
 import cz.zcu.kiv.eitm.facecomparisonbe.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AppController {
@@ -18,25 +23,21 @@ public class AppController {
     @Autowired
     private AuthoriseService authoriseService;
 
+    private final Logger LOG = LoggerFactory.getLogger(AppController.class);
+
     @PostMapping("/register")
-    public @ResponseBody
-    Result register(@RequestBody User user) {
-
-        this.userService.createUser(user);
-
-        return new Result("register", true);
+    public RegisterResponse register(@RequestBody RegisterRequest registerRequest) {
+        LOG.info(registerRequest.toString());
+        this.userService.createUser(new User(registerRequest.getFirstName(), registerRequest.getLastName(), registerRequest.getImage(), registerRequest.getIpAddress()));
+        return new RegisterResponse(true, null); // todo?
     }
 
     @PostMapping("/login")
-    public @ResponseBody
-    Result login(@RequestBody User user) {
-        User userDb = userService.getUserByEmailAddress(user.getEmailAddress());
-        return authoriseService.authorise(user, userDb);
+    public LoginResponse login(@RequestBody LoginRequest loginRequest) {
+        LOG.info(loginRequest.toString());
+        LoginResponse loginResponse = authoriseService.authorise(loginRequest.getIpAddress(), loginRequest.getImage());
+
+        return loginResponse;
     }
 
-    @GetMapping("/users")
-    public @ResponseBody
-    List<User> getAllUsers() {
-        return userService.getAllUsers();
-    }
 }

@@ -26,9 +26,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByEmailAddress(String emailAddress) {
-        Optional<User> userDb = this.userRepository.findUserByEmailAddress(emailAddress);
-
-        return userDb.orElse(null);
+    public List<User> getUsersByIpAddress(String ipAddress) {
+        return this.userRepository.findUsersByIpAddress(ipAddress);
     }
 }

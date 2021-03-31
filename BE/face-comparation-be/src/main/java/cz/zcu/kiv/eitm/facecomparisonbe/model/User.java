@@ -19,17 +19,25 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email_address", unique = true)
-    private String emailAddress;
-
-    /*
-    @Column(name = "picture")
+    @Column(name = "image")
     @Lob
-    private Byte[] picture;
-*/
+    private String image;
+
+    @Column(name = "ipAddress")
+    private String ipAddress;
+
     @CreationTimestamp
     @Column(name = "created_date")
     private Date createdDate;
+
+    public User() { }
+
+    public User(String firstName, String lastName, String image, String ipAddress) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.image = image;
+        this.ipAddress = ipAddress;
+    }
 
     public long getId() {
         return id;
@@ -63,11 +71,19 @@ public class User {
         this.createdDate = createdDate;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getImage() {
+        return image;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
     }
 }
