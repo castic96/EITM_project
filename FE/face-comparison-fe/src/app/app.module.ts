@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { SecretPageComponent } from './components/pages/secret-page/secret-page.component';
 import { WebcamModule } from 'ngx-webcam';
 import { UserAuthenticatorService } from './services/user-authenticator/user-authenticator.service';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { UserAuthenticatorService } from './services/user-authenticator/user-aut
     MatToolbarModule,
     MatButtonModule,
     MatInputModule,
-    WebcamModule
+    WebcamModule,
+    FormsModule
   ],
   providers: [UserAuthenticatorService],
   bootstrap: [AppComponent]

@@ -12,7 +12,7 @@
       <div>
         <mat-form-field>
           <mat-label>First name</mat-label>
-          <input matInput placeholder="First name">
+          <input matInput placeholder="First name" [(ngModel)]="firstName" name="firstname">
         </mat-form-field>
       </div>
 
@@ -20,18 +20,19 @@
       <div>
         <mat-form-field>
           <mat-label>Last name</mat-label>
-          <input matInput placeholder="Last name">
+          <input matInput placeholder="Last name" [(ngModel)]="lastName" name="lastname">
         </mat-form-field>
       </div>
 
       <!-- User image -->
       <div>
-        <webcam></webcam>
+        <webcam [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+        ></webcam>
       </div>
 
       <!-- Submit button -->
       <div>
-        <a mat-raised-button color="accent">Register</a>
+        <a mat-raised-button color="accent" (click)="triggerSnapshot()">Register</a>
       </div>
 
       <div>
