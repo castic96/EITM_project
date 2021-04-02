@@ -10,12 +10,13 @@
     <form>
       <!-- User image -->
       <div>
-        <webcam></webcam>
+        <webcam [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+        ></webcam>
       </div>
 
       <!-- Submit button -->
       <div>
-        <a routerLink="/secret" mat-raised-button color="accent" (click)="login()">Login</a>
+        <a routerLink="/secret" mat-raised-button color="accent" (click)="triggerSnapshot()">Login</a>
       </div>
 
       <div>
