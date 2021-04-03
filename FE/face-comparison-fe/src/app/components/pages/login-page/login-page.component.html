@@ -10,8 +10,17 @@
     <form>
       <!-- User image -->
       <div>
-        <webcam [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+        <webcam
+          [height]="480"
+          [width]="640"
+          [trigger]="triggerObservable"
+          (imageCapture)="handleImage($event)"
+          *ngIf="showWebcam"
         ></webcam>
+      </div>
+
+      <div class="spinner">
+        <mat-spinner *ngIf="!showWebcam" ></mat-spinner>
       </div>
 
       <!-- Submit button -->
@@ -29,8 +38,6 @@
         <a routerLink="/register" style="margin-top: 10px; color: black">Don't have an account?</a>
       </div>
 
-
     </form>
-
   </div>
 </div>

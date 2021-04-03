@@ -236,3 +236,13 @@ mat-form-field {
 .alertDialog {
   margin: 10px;
 }
+
+.spinner {
+  width: 640px;
+  height: 480px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
