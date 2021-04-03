@@ -16,7 +16,13 @@
 
       <!-- Submit button -->
       <div>
-        <a routerLink="/secret" mat-raised-button color="accent" (click)="triggerSnapshot()">Login</a>
+        <a mat-raised-button color="accent" (click)="triggerSnapshot()">Login</a>
+      </div>
+      <!-- Alert dialog -->
+      <div *ngIf="isErrorShown" class="alertDialog">
+        <div class="alert alert-danger" role="alert">
+          You are not registered in
+        </div>
       </div>
 
       <div>

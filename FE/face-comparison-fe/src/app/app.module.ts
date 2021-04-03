@@ -17,6 +17,7 @@ import { SecretPageComponent } from './components/pages/secret-page/secret-page.
 import { WebcamModule } from 'ngx-webcam';
 import { UserAuthenticatorService } from './services/user-authenticator/user-authenticator.service';
 import {FormsModule} from '@angular/forms';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {FormsModule} from '@angular/forms';
     MatButtonModule,
     MatInputModule,
     WebcamModule,
-    FormsModule
+    FormsModule,
+    MatProgressSpinnerModule
   ],
   providers: [UserAuthenticatorService],
   bootstrap: [AppComponent]

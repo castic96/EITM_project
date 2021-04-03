@@ -26,6 +26,8 @@ export class LoginPageComponent implements OnInit {
 
   private ipAddress: string;
 
+  public isErrorShown = false;
+
   constructor(private ipService: IpService, private queryService: QueryService,
               private userAuthenticatorService: UserAuthenticatorService,
               private router: Router) {
@@ -71,10 +73,14 @@ export class LoginPageComponent implements OnInit {
     this.queryServiceSubscription$ = this.queryService.loginQuery(loginRequest).subscribe (data => {
       console.log('prichozi data: ' + data.status);
       if (data.status) {
+        this.isErrorShown = false;
         console.log('if vetev');
-        this.userAuthenticatorService.logIn(new User(data.firstName, data.lastName, new Date()));
-      }
-      else {
+        const loggedUser = new User(data.firstName, data.lastName, new Date());
+        console.log(loggedUser);
+        this.userAuthenticatorService.logIn(loggedUser);
+        this.router.navigate(['/secret']);
+      } else {
+        this.isErrorShown = true;
         console.log('else vetev'); // TODO
       }
 

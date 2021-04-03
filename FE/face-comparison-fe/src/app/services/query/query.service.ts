@@ -27,7 +27,9 @@ export class QueryService {
   constructor(private httpClient: HttpClient) {}
 
   loginQuery(loginRequest: LoginRequest): Observable<LoginResponse> {
-    return this.httpClient.post<LoginResponse>(this.backendUrl + this.loginUrl, loginRequest, httpOptions);
+    const loginResponse = this.httpClient.post<LoginResponse>(this.backendUrl + this.loginUrl, loginRequest, httpOptions);
+    console.log(loginResponse);
+    return loginResponse;
   }
 
   registerQuery(registerRequest: RegisterRequest): Observable<RegisterResponse> {
