@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { UserAuthenticatorService } from '../../../services/user-authenticator/user-authenticator.service';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {UserAuthenticatorService} from '../../../services/user-authenticator/user-authenticator.service';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {WebcamImage} from 'ngx-webcam';
-import {User} from '../../../domain/User';
 import {IpService} from '../../../services/ip-address/ip.service';
 import {QueryService} from '../../../services/query/query.service';
-import { RegisterRequest } from '../../../dto/RegisterRequest';
+import {RegisterRequest} from '../../../dto/RegisterRequest';
 
 @Component({
   selector: 'app-register-page',
@@ -26,6 +25,9 @@ export class RegisterPageComponent implements OnInit {
 
   private ipAddress: string;
 
+  public isErrorShown = false;
+  public errorMessage = '';
+
   firstName: string;
   lastName: string;
 
@@ -40,8 +42,7 @@ export class RegisterPageComponent implements OnInit {
   ngOnInit(): void {
     if (this.userAuthenticatorService.isLogged) {
       this.router.navigate(['/', 'secret']);
-    }
-    else {
+    } else {
       this.getIPAddress();
     }
   }
@@ -63,13 +64,30 @@ export class RegisterPageComponent implements OnInit {
 
   register(): void {
     console.log('zacatek register');
-    if (!this.webcamImage) { return; }
+    if (!this.webcamImage) {
+      return;
+    }
 
-    if (!this.ipAddress) { console.log('problem se zjistenim ip adresy'); return; }
+    if (!this.ipAddress) {
+      console.log('problem se zjistenim ip adresy');
+      return;
+    }
 
-    if (this.firstName === '') { console.log('nezadane krestni jmeno'); return; }
-    if (this.lastName === '') { console.log('nezadane prijmeni'); return; }
-
+    if (this.firstName === '' || this.firstName === null) {
+      this.showWebcam = false;
+      console.log('nezadane krestni jmeno');
+      this.errorMessage = 'You have to fill first name';
+      this.isErrorShown = true;
+      return;
+    }
+    if (this.lastName === '' || this.lastName == null) {
+      console.log('nezadane prijmeni');
+      this.errorMessage = 'You have to fill last name';
+      this.isErrorShown = true;
+      return;
+    }
+    this.isErrorShown = false;
+    this.showWebcam = false;
     const registerRequest: RegisterRequest = new RegisterRequest(
       this.firstName,
       this.lastName,
@@ -77,12 +95,12 @@ export class RegisterPageComponent implements OnInit {
       this.ipAddress
     );
 
-    this.queryServiceSubscription$ = this.queryService.registerQuery(registerRequest).subscribe (data => {
+    this.queryServiceSubscription$ = this.queryService.registerQuery(registerRequest).subscribe(data => {
       console.log('prichozi data: ' + data.status);
       if (data.status) {
         console.log('if vetev');
-      }
-      else {
+        this.router.navigate(['/', 'login']);
+      } else {
         console.log('else vetev'); // TODO
       }
 
