@@ -31,14 +31,14 @@ public class AppController {
     public RegisterResponse register(@RequestBody RegisterRequest registerRequest) {
         LOG.info(registerRequest.toString());
         this.userService.createUser(new User(registerRequest.getFirstName(), registerRequest.getLastName(), registerRequest.getImage(), registerRequest.getIpAddress()));
-        return new RegisterResponse(true, null); // todo?
+        return new RegisterResponse(true, null); // todo případně dodělat kontrolu existující uživatele podle emailové adresy
     }
 
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest loginRequest) {
         LOG.info(loginRequest.toString());
         LoginResponse loginResponse = authoriseService.authorise(loginRequest.getIpAddress(), loginRequest.getImage());
-
+        LOG.info(loginResponse.toString());
         return loginResponse;
     }
 

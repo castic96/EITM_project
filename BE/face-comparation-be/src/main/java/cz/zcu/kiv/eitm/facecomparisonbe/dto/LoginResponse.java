@@ -3,24 +3,33 @@ package cz.zcu.kiv.eitm.facecomparisonbe.dto;
 public class LoginResponse {
 
     private boolean status;
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
 
-    public LoginResponse(boolean status, String firstname, String lastname) {
+    public LoginResponse(boolean status, String firstName, String lastName) {
         this.status = status;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public boolean isStatus() {
         return status;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
+    }
+
+    @Override
+    public String toString() {
+        return "LoginResponse{" +
+                "status=" + status +
+                ", firstname='" + firstName + '\'' +
+                ", lastname='" + lastName + '\'' +
+                '}';
     }
 }
