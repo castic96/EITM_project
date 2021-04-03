@@ -10,13 +10,12 @@
     <form>
       <!-- User image -->
       <div>
-        <webcam [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
-        ></webcam>
+        <webcam [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"></webcam>
       </div>
 
       <!-- Submit button -->
       <div>
-        <a mat-raised-button color="accent" (click)="triggerSnapshot()">Login</a>
+        <a mat-raised-button color="accent" [disabled]="!showWebcam" (click)="triggerSnapshot()">Login</a>
       </div>
       <!-- Alert dialog -->
       <div *ngIf="isErrorShown" class="alertDialog">
