@@ -233,13 +233,13 @@ mat-form-field {
   width: 70%;
 }
 
-.alertDialog {
-  margin: 10px;
+.custom-margin {
+  margin-bottom: 10px;
 }
 
 .spinner {
   width: 640px;
-  height: 480px;
+  height: 486px;
   display: flex;
   flex-direction: row;
   justify-content: center;

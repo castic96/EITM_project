@@ -46,6 +46,7 @@ export class LoginPageComponent implements OnInit {
   triggerSnapshot(): void {
     if (this.showWebcam) {
       this.trigger.next();
+      this.showWebcam = false;
     }
   }
 
@@ -61,7 +62,6 @@ export class LoginPageComponent implements OnInit {
   }
 
   tryLogin(): void {
-    console.log('zacatek try loginu');
     if (!this.webcamImage) { return; }
 
     if (!this.ipAddress) { console.log('problem se zjistenim ip adresy'); }
@@ -75,14 +75,13 @@ export class LoginPageComponent implements OnInit {
       console.log('prichozi data: ' + data.status);
       if (data.status) {
         this.isErrorShown = false;
-        console.log('if vetev');
         const loggedUser = new User(data.firstName, data.lastName, new Date());
         console.log(loggedUser);
         this.userAuthenticatorService.logIn(loggedUser);
         this.router.navigate(['/secret']);
       } else {
         this.isErrorShown = true;
-        console.log('else vetev'); // TODO
+        this.showWebcam = true;
       }
 
     });
