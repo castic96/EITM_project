@@ -44,8 +44,9 @@ export class LoginPageComponent implements OnInit {
   }
 
   triggerSnapshot(): void {
-    this.trigger.next();
-    // this.userAuthenticatorService.logIn(new User('FirstName', 'LastName', new Date()));
+    if (this.showWebcam) {
+      this.trigger.next();
+    }
   }
 
   // camera

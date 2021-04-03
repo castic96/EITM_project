@@ -25,7 +25,7 @@
 
       <!-- Submit button -->
       <div>
-        <a mat-raised-button color="accent" (click)="triggerSnapshot()">Login</a>
+        <a mat-raised-button color="accent" [disabled]="!showWebcam" (click)="triggerSnapshot()">Login</a>
       </div>
       <!-- Alert dialog -->
       <div *ngIf="isErrorShown" class="alertDialog">
@@ -38,6 +38,8 @@
         <a routerLink="/register" style="margin-top: 10px; color: black">Don't have an account?</a>
       </div>
 
+
     </form>
+
   </div>
 </div>
