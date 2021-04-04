@@ -1,0 +1,20 @@
+version: '3'
+services:
+
+  face-comparation-backend:
+    build:
+      ./BE/face-comparation-be
+    image: ondrejvane/face-comparation-be:1.0.0
+    container_name: face-comparation-backend
+    ports:
+      - 8080:8080
+
+  face-comparation-frontend:
+    build:
+      ./FE/face-comparation-be
+    image: ondrejvane/face-comparation-be:1.0.0
+    container_name: face-comparation-frontend
+    ports:
+      - 4200:80
+    links:
+      - face-comparation-backend
