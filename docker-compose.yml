@@ -11,8 +11,8 @@ services:
 
   face-comparation-frontend:
     build:
-      ./FE/face-comparasion-be
-    image: ondrejvane/face-comparasion-be:1.0.0
+      ./FE/face-comparasion-fe
+    image: ondrejvane/face-comparasion-fe:1.0.0
     container_name: face-comparasion-frontend
     ports:
       - 4200:80
