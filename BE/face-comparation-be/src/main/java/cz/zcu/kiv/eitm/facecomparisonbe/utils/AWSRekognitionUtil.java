@@ -14,15 +14,25 @@ public class AWSRekognitionUtil {
 
     private final Logger LOG = LoggerFactory.getLogger(AWSRekognitionUtil.class);
 
+    /** Similarity threshold for face comparison. */
     private final Float SIMILARITY_THRESHOLD = 70F;
+    /** AmazonRekognition client. */
     private final AmazonRekognition rekognitionClient;
 
+    /** Minimum confidence value to declare that two faces are same. */
     private final Float CONFIDENCE_MIN = 0.8F;
 
     public AWSRekognitionUtil() {
         this.rekognitionClient = AmazonRekognitionClientBuilder.defaultClient();
     }
 
+    /**
+     * Compares two images with faces.
+     *
+     * @param sourceImageBytes source image
+     * @param targetImageBytes target image
+     * @return true if faces in images are same
+     */
     public boolean compareImages(ByteBuffer sourceImageBytes, ByteBuffer targetImageBytes) {
         Image source = new Image()
                 .withBytes(sourceImageBytes);

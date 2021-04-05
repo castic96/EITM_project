@@ -2,7 +2,9 @@ package cz.zcu.kiv.eitm.facecomparisonbe.dto;
 
 public class LoginRequest {
 
-    private String image; // in base64
+    /** Image as base64 string. */
+    private String image;
+    /** IP address. */
     private String ipAddress;
 
     public LoginRequest(String image, String ipAddress) {

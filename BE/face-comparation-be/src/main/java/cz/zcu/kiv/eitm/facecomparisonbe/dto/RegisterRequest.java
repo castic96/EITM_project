@@ -2,9 +2,13 @@ package cz.zcu.kiv.eitm.facecomparisonbe.dto;
 
 public class RegisterRequest {
 
+    /** User's first name. */
     private String firstName;
+    /** User's last name. */
     private String lastName;
-    private String image; // in base64
+    /** Image as base64 string. */
+    private String image;
+    /** IP address. */
     private String ipAddress;
 
     public RegisterRequest(String firstName, String lastName, String image, String ipAddress) {

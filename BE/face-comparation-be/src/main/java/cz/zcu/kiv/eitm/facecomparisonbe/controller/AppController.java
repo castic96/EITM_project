@@ -5,7 +5,7 @@ import cz.zcu.kiv.eitm.facecomparisonbe.dto.LoginResponse;
 import cz.zcu.kiv.eitm.facecomparisonbe.dto.RegisterRequest;
 import cz.zcu.kiv.eitm.facecomparisonbe.dto.RegisterResponse;
 import cz.zcu.kiv.eitm.facecomparisonbe.model.User;
-import cz.zcu.kiv.eitm.facecomparisonbe.service.AuthoriseService;
+import cz.zcu.kiv.eitm.facecomparisonbe.service.AuthenticateService;
 import cz.zcu.kiv.eitm.facecomparisonbe.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +20,16 @@ public class AppController {
     private UserService userService;
 
     @Autowired
-    private AuthoriseService authoriseService;
+    private AuthenticateService authenticateService;
 
     private final Logger LOG = LoggerFactory.getLogger(AppController.class);
 
+    /**
+     * Registers user in application.
+     *
+     * @param registerRequest register request
+     * @return register response with status
+     */
     @PostMapping("/register")
     public RegisterResponse register(@RequestBody RegisterRequest registerRequest) {
         LOG.info(registerRequest.toString());
@@ -31,10 +37,16 @@ public class AppController {
         return new RegisterResponse(true, null); // todo případně dodělat kontrolu existující uživatele podle emailové adresy
     }
 
+    /**
+     * Logs user in application.
+     *
+     * @param loginRequest login request
+     * @return login response with status, first name and last name
+     */
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest loginRequest) {
         LOG.info(loginRequest.toString());
-        LoginResponse loginResponse = authoriseService.authorise(loginRequest.getIpAddress(), loginRequest.getImage());
+        LoginResponse loginResponse = authenticateService.authenticate(loginRequest.getIpAddress(), loginRequest.getImage());
         LOG.info(loginResponse.toString());
         return loginResponse;
     }

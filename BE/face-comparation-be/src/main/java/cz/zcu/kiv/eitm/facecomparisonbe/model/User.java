@@ -21,7 +21,7 @@ public class User {
 
     @Column(name = "image")
     @Lob
-    private String image;
+    private String image; // in base64
 
     @Column(name = "ipAddress")
     private String ipAddress;

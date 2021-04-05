@@ -11,13 +11,13 @@ import java.util.Base64;
 import java.util.List;
 
 @Service
-public class AuthoriseServiceImpl implements AuthoriseService {
+public class AuthenticateServiceImpl implements AuthenticateService {
 
     @Autowired
     private UserService userService;
 
     @Override
-    public LoginResponse authorise(String ipAddress, String image) {
+    public LoginResponse authenticate(String ipAddress, String image) {
         List<User> usersByIpAddress = userService.getUsersByIpAddress(ipAddress);
         User foundUser = checkUsers(usersByIpAddress, image);
 
@@ -36,6 +36,14 @@ public class AuthoriseServiceImpl implements AuthoriseService {
         }
     }
 
+    /**
+     * Compares all given users' images with given image. If some user's image
+     * (face) is the same as the face in given image, returns this user.
+     *
+     * @param users users in DB
+     * @param image login image
+     * @return found user with similar image (face) or NULL
+     */
     private User checkUsers(List<User> users, String image) {
         AWSRekognitionUtil awsRekognitionUtil = new AWSRekognitionUtil();
 
