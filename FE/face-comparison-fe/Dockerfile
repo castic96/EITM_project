@@ -10,4 +10,4 @@ RUN npm run build
 FROM nginx:1.17.9-alpine as prod-stage
 COPY ./default.conf /etc/nginx/conf.d/default.conf
 COPY --from=build-stage /app/dist/KIV-IR /usr/share/nginx/html
-EXPOSE 80
+EXPOSE 4200
