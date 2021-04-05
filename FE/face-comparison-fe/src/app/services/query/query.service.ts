@@ -18,7 +18,7 @@ const httpOptions = {
 })
 export class QueryService {
 
-  backendUrl = 'http://147.228.173.44:8080/';
+  backendUrl = 'http://localhost:8080/';
   loginUrl = 'login';
   registerUrl = 'register';
   testBackendUrl = 'test';
