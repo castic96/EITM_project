@@ -8,12 +8,10 @@ import { RegisterRequest } from '../../dto/RegisterRequest';
 
 const httpOptions = {
   headers: new HttpHeaders( {
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'GET, POST',
-    'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/json; charset=UTF-8'
+    'Content-Type': 'application/json'
   })
 };
+
 
 @Injectable({
   providedIn: 'root'
