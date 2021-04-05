@@ -8,19 +8,17 @@ import { RegisterRequest } from '../../dto/RegisterRequest';
 
 const httpOptions = {
   headers: new HttpHeaders( {
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'GET, POST',
-    'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/json; charset=UTF-8'
+    'Content-Type': 'application/json'
   })
 };
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class QueryService {
 
-  backendUrl = 'http://localhost:8080/';
+  backendUrl = 'http://147.228.173.44:8080/';
   loginUrl = 'login';
   registerUrl = 'register';
   testBackendUrl = 'test';
