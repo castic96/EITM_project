@@ -10,10 +10,7 @@ import cz.zcu.kiv.eitm.facecomparisonbe.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "${client.url}")
 @RestController
@@ -40,6 +37,11 @@ public class AppController {
         LoginResponse loginResponse = authoriseService.authorise(loginRequest.getIpAddress(), loginRequest.getImage());
         LOG.info(loginResponse.toString());
         return loginResponse;
+    }
+
+    @GetMapping("/test")
+    public RegisterResponse test() {
+        return new RegisterResponse(false, "This is from BE");
     }
 
 }

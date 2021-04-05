@@ -23,6 +23,7 @@ export class QueryService {
   backendUrl = 'http://localhost:8080/';
   loginUrl = 'login';
   registerUrl = 'register';
+  testBackendUrl = 'test';
 
   constructor(private httpClient: HttpClient) {}
 
@@ -36,4 +37,7 @@ export class QueryService {
     return this.httpClient.post<RegisterResponse>(this.backendUrl + this.registerUrl, registerRequest, httpOptions);
   }
 
+  testBackend(): Observable<RegisterResponse> {
+    return this.httpClient.get<RegisterResponse>(this.backendUrl + this.testBackendUrl, httpOptions);
+  }
 }
