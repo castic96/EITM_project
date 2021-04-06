@@ -32,6 +32,7 @@
           [trigger]="triggerObservable"
           (imageCapture)="handleImage($event)"
           *ngIf="showWebcam"
+          (initError)="handleInitError($event)"
         ></webcam>
       </div>
 

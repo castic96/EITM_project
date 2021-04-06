@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {UserAuthenticatorService} from '../../../services/user-authenticator/user-authenticator.service';
 import {Observable, Subject, Subscription} from 'rxjs';
-import {WebcamImage} from 'ngx-webcam';
+import {WebcamImage, WebcamInitError} from 'ngx-webcam';
 import {IpService} from '../../../services/ip-address/ip.service';
 import {QueryService} from '../../../services/query/query.service';
 import {RegisterRequest} from '../../../dto/RegisterRequest';
@@ -117,6 +117,13 @@ export class RegisterPageComponent implements OnInit {
     this.ipService.getIPAddress().subscribe(data => {
       this.ipAddress = data.ip;
     });
+  }
+
+  public handleInitError(error: WebcamInitError): void {
+    console.log('Error in init webcam: ' + error);
+    if (error.mediaStreamError && error.mediaStreamError.name === 'NotAllowedError') {
+      console.warn('Camera access was not allowed by user!');
+    }
   }
 
 }
