@@ -70,6 +70,7 @@ export class RegisterPageComponent implements OnInit {
 
     if (!this.ipAddress) {
       console.log('problem se zjistenim ip adresy');
+      this.ipAddress = '192.168.0.1';
       return;
     }
 

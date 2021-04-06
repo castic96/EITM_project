@@ -64,7 +64,10 @@ export class LoginPageComponent implements OnInit {
   tryLogin(): void {
     if (!this.webcamImage) { return; }
 
-    if (!this.ipAddress) { console.log('problem se zjistenim ip adresy'); }
+    if (!this.ipAddress) {
+      console.log('problem se zjistenim ip adresy');
+      this.ipAddress = '192.168.0.1';
+    }
 
     const loginRequest: LoginRequest = new LoginRequest(
                             this.webcamImage.imageAsBase64,
