@@ -8,6 +8,7 @@ services:
     container_name: face-comparation-backend
     ports:
       - 8080:8080
+      
 
   face-comparation-frontend:
     build:
@@ -16,5 +17,6 @@ services:
     container_name: face-comparasion-frontend
     ports:
       - 80:80
+      - 443:443  
     links:
       - face-comparation-backend
