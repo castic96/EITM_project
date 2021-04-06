@@ -1,7 +1,10 @@
 package cz.zcu.kiv.eitm.facecomparisonbe.utils;
 
 import com.amazonaws.AmazonServiceException;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.services.rekognition.AmazonRekognition;
+import com.amazonaws.services.rekognition.AmazonRekognitionClient;
 import com.amazonaws.services.rekognition.AmazonRekognitionClientBuilder;
 import com.amazonaws.services.rekognition.model.*;
 import org.slf4j.Logger;
@@ -23,7 +26,19 @@ public class AWSRekognitionUtil {
     private final Float CONFIDENCE_MIN = 0.8F;
 
     public AWSRekognitionUtil() {
-        this.rekognitionClient = AmazonRekognitionClientBuilder.defaultClient();
+        this.rekognitionClient = AmazonRekognitionClient.builder()
+                .withRegion("eu-central-1")
+                .withCredentials(new AWSStaticCredentialsProvider(new AWSCredentials() {
+                    @Override
+                    public String getAWSAccessKeyId() {
+                        return "AKIAWC2HSJOPYHOV2PMD";
+                    }
+
+                    @Override
+                    public String getAWSSecretKey() {
+                        return "TetZO+VqJ2tqfdlI8q02aaivSQMVV+j6kEI0O+bC";
+                    }
+                })).build();
     }
 
     /**
