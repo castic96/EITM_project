@@ -71,9 +71,7 @@
           "serve": {
             "builder": "@angular-devkit/build-angular:dev-server",
             "options": {
-              "browserTarget": "face-comparison-fe:build",
-              "sslKey": "./ssl/server.key",
-              "sslCert": "./ssl/server.crt"
+              "browserTarget": "face-comparison-fe:build"
             },
             "configurations": {
               "production": {
