@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class AppController {
@@ -53,7 +55,12 @@ public class AppController {
 
     @GetMapping("/test")
     public RegisterResponse test() {
-        return new RegisterResponse(false, "This is from BE");
+        List<User> users =  userService.getAllUsers();
+        StringBuilder usersString = new StringBuilder();
+        for (User user : users) {
+            usersString.append(user.toString()).append("\n");
+        }
+        return new RegisterResponse(false, usersString.toString());
     }
 
 }

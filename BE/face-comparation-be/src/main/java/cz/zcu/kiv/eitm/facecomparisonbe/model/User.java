@@ -86,4 +86,16 @@ public class User {
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", image='" + image + '\'' +
+                ", ipAddress='" + ipAddress + '\'' +
+                ", createdDate=" + createdDate +
+                '}';
+    }
 }
