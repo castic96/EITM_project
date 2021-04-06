@@ -120,7 +120,7 @@ export class RegisterPageComponent implements OnInit {
   }
 
   public handleInitError(error: WebcamInitError): void {
-    console.log('Error in init webcam: ' + error);
+    console.log('Error in init webcam, message: ' + error.message + ' mediaStreamError:' + error.mediaStreamError);
     if (error.mediaStreamError && error.mediaStreamError.name === 'NotAllowedError') {
       console.warn('Camera access was not allowed by user!');
     }
