@@ -75,7 +75,7 @@ export class RegisterPageComponent implements OnInit {
     }
 
     if (this.firstName === '' || this.firstName === null) {
-      this.showWebcam = false;
+      this.showWebcam = true;
       console.log('nezadane krestni jmeno');
       this.errorMessage = 'You have to fill first name';
       this.isErrorShown = true;
@@ -102,7 +102,7 @@ export class RegisterPageComponent implements OnInit {
         console.log('if vetev');
         this.router.navigate(['/', 'login']);
       } else {
-        console.log('else vetev'); // TODO
+        console.log('else vetev');
       }
 
     });
