@@ -53,14 +53,10 @@ public class AppController {
         return loginResponse;
     }
 
-    @GetMapping("/test")
-    public RegisterResponse test() {
-        List<User> users =  userService.getAllUsers();
-        StringBuilder usersString = new StringBuilder();
-        for (User user : users) {
-            usersString.append(user.toString()).append("\n");
-        }
-        return new RegisterResponse(false, usersString.toString());
+    @GetMapping("/users")
+    public List<User> test() {
+        return userService.getAllUsers();
+
     }
 
 }

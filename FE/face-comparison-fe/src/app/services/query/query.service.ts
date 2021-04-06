@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { LoginResponse } from '../../dto/LoginResponse';
 import { RegisterResponse } from '../../dto/RegisterResponse';
 import { RegisterRequest } from '../../dto/RegisterRequest';
+import {User} from '../../domain/User';
 
 const httpOptions = {
   headers: new HttpHeaders( {
@@ -18,10 +19,10 @@ const httpOptions = {
 })
 export class QueryService {
 
-  backendUrl = 'http://147.228.173.43:8080/';
+  backendUrl = 'http://localhost:8080/';
   loginUrl = 'login';
   registerUrl = 'register';
-  testBackendUrl = 'test';
+  testBackendUrl = 'users';
 
   constructor(private httpClient: HttpClient) {}
 
@@ -35,7 +36,7 @@ export class QueryService {
     return this.httpClient.post<RegisterResponse>(this.backendUrl + this.registerUrl, registerRequest, httpOptions);
   }
 
-  testBackend(): Observable<RegisterResponse> {
-    return this.httpClient.get<RegisterResponse>(this.backendUrl + this.testBackendUrl, httpOptions);
+  testBackend(): Observable<User[]> {
+    return this.httpClient.get<User[]>(this.backendUrl + this.testBackendUrl, httpOptions);
   }
 }
