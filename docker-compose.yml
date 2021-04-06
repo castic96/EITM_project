@@ -14,8 +14,6 @@ services:
       ./FE/face-comparison-fe
     image: ondrejvane/face-comparasion-fe:1.0.0
     container_name: face-comparasion-frontend
-    devices:
-      - /dev/video0:/dev/video0
     ports:
       - 4200:80
     links:
