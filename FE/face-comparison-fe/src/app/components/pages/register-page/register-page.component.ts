@@ -51,10 +51,7 @@ export class RegisterPageComponent implements OnInit {
   }
 
   triggerSnapshot(): void {
-    if (this.showWebcam) {
       this.trigger.next();
-      this.showWebcam = false;
-    }
   }
 
   // camera
@@ -81,7 +78,6 @@ export class RegisterPageComponent implements OnInit {
     }
 
     if (this.firstName === '' || this.firstName === null) {
-      this.showWebcam = true;
       console.log('nezadane krestni jmeno');
       this.errorMessage = 'You have to fill first name';
       this.isErrorShown = true;
@@ -99,7 +95,7 @@ export class RegisterPageComponent implements OnInit {
       this.isErrorShown = true;
       return;
     }
-    if (this.isEmailAddress(this.email) === false) {
+    if (!this.isEmailAddress(this.email)) {
       console.log('nevalidni email');
       this.errorMessage = 'Email address is incorrect!';
       this.isErrorShown = true;
