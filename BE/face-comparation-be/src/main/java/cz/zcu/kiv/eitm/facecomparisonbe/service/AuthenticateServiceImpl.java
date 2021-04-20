@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -17,22 +18,24 @@ public class AuthenticateServiceImpl implements AuthenticateService {
     private UserService userService;
 
     @Override
-    public LoginResponse authenticate(String ipAddress, String image) {
-        List<User> usersByIpAddress = userService.getUsersByIpAddress(ipAddress);
-        User foundUser = checkUsers(usersByIpAddress, image);
-
-        if (foundUser != null) {
-            return new LoginResponse(true, foundUser.getFirstName(), foundUser.getLastName());
+    public LoginResponse authenticate(String ipAddress, String image, String email) {
+        List<User> users;
+        if (email != null) {
+            users = userService.getUsersByEmail(email);
         } else {
-            List<User> otherUsers = userService.getAllUsers();
-            otherUsers.removeAll(usersByIpAddress);
+            users = userService.getAllUsers();
+        }
 
-            foundUser = checkUsers(otherUsers, image);
-            if (foundUser != null) {
-                return new LoginResponse(true, foundUser.getFirstName(), foundUser.getLastName());
-            } else {
-                return new LoginResponse(false, null, null);
-            }
+        List<User> foundUsers = checkUsers(users, image);
+
+        int count = foundUsers.size();
+        if (count == 1) { // found the one -> return this user
+            User foundUser = foundUsers.get(0);
+            return new LoginResponse(true, false, foundUser.getFirstName(), foundUser.getLastName());
+        } else if (count > 1) { // found multiple users -> need e-mail address
+            return new LoginResponse(false, true, null, null);
+        } else { // other problem (no one found)
+            return new LoginResponse(false, false, null, null);
         }
     }
 
@@ -42,24 +45,25 @@ public class AuthenticateServiceImpl implements AuthenticateService {
      *
      * @param users users in DB
      * @param image login image
-     * @return found user with similar image (face) or NULL
+     * @return found users with similar image (face)
      */
-    private User checkUsers(List<User> users, String image) {
+    private List<User> checkUsers(List<User> users, String image) {
         AWSRekognitionUtil awsRekognitionUtil = new AWSRekognitionUtil();
 
+        List<User> foundUsers = new ArrayList<>();
         for (User user : users) {
             String imgBase64 = user.getImage();
 
             ByteBuffer sourceImageBytes = ByteBuffer.wrap(Base64.getDecoder().decode(imgBase64));
             ByteBuffer targetImageBytes = ByteBuffer.wrap(Base64.getDecoder().decode(image));
 
-            boolean found = awsRekognitionUtil.compareImages(sourceImageBytes, targetImageBytes);
+            Float confidence = awsRekognitionUtil.compareImages(sourceImageBytes, targetImageBytes);
 
-            if (found) {
-                return user;
+            if (confidence > AWSRekognitionUtil.CONFIDENCE_MIN) {
+               foundUsers.add(user);
             }
         }
 
-        return null;
+        return foundUsers;
     }
 }

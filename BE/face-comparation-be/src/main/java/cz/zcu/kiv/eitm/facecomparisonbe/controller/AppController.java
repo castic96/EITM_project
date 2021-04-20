@@ -53,7 +53,7 @@ public class AppController {
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest loginRequest) {
         LOG.info(loginRequest.toString());
-        LoginResponse loginResponse = authenticateService.authenticate(loginRequest.getIpAddress(), loginRequest.getImage());
+        LoginResponse loginResponse = authenticateService.authenticate(loginRequest.getIpAddress(), loginRequest.getImage(), loginRequest.getEmail());
         LOG.info(loginResponse.toString());
         return loginResponse;
     }

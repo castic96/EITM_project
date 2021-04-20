@@ -5,7 +5,6 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.services.rekognition.AmazonRekognition;
 import com.amazonaws.services.rekognition.AmazonRekognitionClient;
-import com.amazonaws.services.rekognition.AmazonRekognitionClientBuilder;
 import com.amazonaws.services.rekognition.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +22,7 @@ public class AWSRekognitionUtil {
     private final AmazonRekognition rekognitionClient;
 
     /** Minimum confidence value to declare that two faces are same. */
-    private final Float CONFIDENCE_MIN = 0.8F;
+    public static final Float CONFIDENCE_MIN = 90.0F;
 
     public AWSRekognitionUtil() {
         this.rekognitionClient = AmazonRekognitionClient.builder()
@@ -46,9 +45,9 @@ public class AWSRekognitionUtil {
      *
      * @param sourceImageBytes source image
      * @param targetImageBytes target image
-     * @return true if faces in images are same
+     * @return confidence or -1 (when error)
      */
-    public boolean compareImages(ByteBuffer sourceImageBytes, ByteBuffer targetImageBytes) {
+    public Float compareImages(ByteBuffer sourceImageBytes, ByteBuffer targetImageBytes) {
         Image source = new Image()
                 .withBytes(sourceImageBytes);
         Image target = new Image()
@@ -64,12 +63,12 @@ public class AWSRekognitionUtil {
         try {
             compareFacesResult = rekognitionClient.compareFaces(request);
         } catch (AmazonServiceException e) {
-            return false;
+            return -1.0f;
         }
 
         // Display results
         List<CompareFacesMatch> faceDetails = compareFacesResult.getFaceMatches();
-        if (faceDetails.size() < 1) return false;
+        if (faceDetails.size() < 1) return -1.0f;
 
         ComparedFace face = faceDetails.get(0).getFace();
         BoundingBox position = face.getBoundingBox();
@@ -80,7 +79,7 @@ public class AWSRekognitionUtil {
         LOG.info("confidence = " + confidence);
         LOG.info("position = " + position.getLeft() + "," + position.getTop());
 
-        return confidence > CONFIDENCE_MIN;
+        return confidence;
     }
 
 }
