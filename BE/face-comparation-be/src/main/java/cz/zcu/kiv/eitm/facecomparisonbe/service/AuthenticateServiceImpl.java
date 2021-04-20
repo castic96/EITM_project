@@ -20,7 +20,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
     @Override
     public LoginResponse authenticate(String ipAddress, String image, String email) {
         List<User> users;
-        if (email != null) {
+        if (!email.equals("")) {
             users = userService.getUsersByEmail(email);
         } else {
             users = userService.getAllUsers();
