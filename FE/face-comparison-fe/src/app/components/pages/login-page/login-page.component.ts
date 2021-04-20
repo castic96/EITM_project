@@ -3,7 +3,7 @@ import { UserAuthenticatorService } from '../../../services/user-authenticator/u
 import { User } from '../../../domain/User';
 import { Router } from '@angular/router';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { WebcamImage } from 'ngx-webcam';
+import { WebcamImage, WebcamInitError } from 'ngx-webcam';
 import { LoginRequest } from '../../../dto/LoginRequest';
 import { QueryService } from '../../../services/query/query.service';
 import { IpService } from '../../../services/ip-address/ip.service';
@@ -27,6 +27,8 @@ export class LoginPageComponent implements OnInit {
   private ipAddress: string;
 
   public isErrorShown = false;
+  public errorMessage = '';
+  public isCameraError = false;
 
   constructor(private ipService: IpService, private queryService: QueryService,
               private userAuthenticatorService: UserAuthenticatorService,
@@ -62,7 +64,9 @@ export class LoginPageComponent implements OnInit {
   }
 
   tryLogin(): void {
-    if (!this.webcamImage) { return; }
+    if (!this.webcamImage || this.isCameraError) {
+      return;
+    }
 
     if (!this.ipAddress) {
       console.log('problem se zjistenim ip adresy');
@@ -83,6 +87,7 @@ export class LoginPageComponent implements OnInit {
         this.userAuthenticatorService.logIn(loggedUser);
         this.router.navigate(['/secret']);
       } else {
+        this.errorMessage = 'You are not registered in.';
         this.isErrorShown = true;
         this.showWebcam = true;
       }
@@ -100,5 +105,24 @@ export class LoginPageComponent implements OnInit {
     this.ipService.getIPAddress().subscribe(data => {
       this.ipAddress = data.ip;
     });
+  }
+
+  public handleInitError(error: WebcamInitError): void {
+    console.log('Error in init webcam, message: ' + error.message + ' mediaStreamError:' + error.mediaStreamError);
+    this.isErrorShown = true;
+    this.isCameraError = true;
+
+    if (error.mediaStreamError && error.mediaStreamError.name === 'NotAllowedError') {
+      console.warn('Camera access was not allowed by user!');
+      this.errorMessage = 'Camera access was not allowed by user! Allow camera access and reload the page.';
+
+    } else if (error.mediaStreamError && error.mediaStreamError.name === 'NotFoundError') {
+      console.warn('Camera not found!');
+      this.errorMessage = 'Camera not found! Connect compatible camera and reload the page.';
+    }
+    else {
+      console.warn('Problem with camera!');
+      this.errorMessage = 'Problem with camera! Try reload the page.';
+    }
   }
 }

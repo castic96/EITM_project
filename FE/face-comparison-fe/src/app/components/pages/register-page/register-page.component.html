@@ -42,7 +42,7 @@
 
       <!-- Submit button -->
       <div>
-        <a mat-raised-button color="accent" [disabled]="!showWebcam" (click)="triggerSnapshot()">Register</a>
+        <a mat-raised-button color="accent" [disabled]="!showWebcam || isCameraError" (click)="triggerSnapshot()">Register</a>
       </div>
 
       <!-- Alert dialog -->

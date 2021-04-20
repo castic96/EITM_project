@@ -27,6 +27,7 @@ export class RegisterPageComponent implements OnInit {
 
   public isErrorShown = false;
   public errorMessage = '';
+  public isCameraError = false;
 
   firstName: string;
   lastName: string;
@@ -64,7 +65,7 @@ export class RegisterPageComponent implements OnInit {
 
   register(): void {
     console.log('zacatek register');
-    if (!this.webcamImage) {
+    if (!this.webcamImage || this.isCameraError) {
       return;
     }
 
@@ -122,8 +123,20 @@ export class RegisterPageComponent implements OnInit {
 
   public handleInitError(error: WebcamInitError): void {
     console.log('Error in init webcam, message: ' + error.message + ' mediaStreamError:' + error.mediaStreamError);
+    this.isErrorShown = true;
+    this.isCameraError = true;
+
     if (error.mediaStreamError && error.mediaStreamError.name === 'NotAllowedError') {
       console.warn('Camera access was not allowed by user!');
+      this.errorMessage = 'Camera access was not allowed by user! Allow camera access and reload the page.';
+
+    } else if (error.mediaStreamError && error.mediaStreamError.name === 'NotFoundError') {
+      console.warn('Camera not found!');
+      this.errorMessage = 'Camera not found! Connect compatible camera and reload the page.';
+    }
+    else {
+      console.warn('Problem with camera!');
+      this.errorMessage = 'Problem with camera! Try reload the page.';
     }
   }
 

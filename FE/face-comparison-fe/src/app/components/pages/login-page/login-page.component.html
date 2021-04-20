@@ -16,6 +16,7 @@
           [trigger]="triggerObservable"
           (imageCapture)="handleImage($event)"
           *ngIf="showWebcam"
+          (initError)="handleInitError($event)"
         ></webcam>
       </div>
 
@@ -25,12 +26,12 @@
 
       <!-- Submit button -->
       <div>
-        <a class="custom-margin" mat-raised-button color="accent" [disabled]="!showWebcam" (click)="triggerSnapshot()">Login</a>
+        <a class="custom-margin" mat-raised-button color="accent" [disabled]="!showWebcam || isCameraError" (click)="triggerSnapshot()">Login</a>
       </div>
       <!-- Alert dialog -->
       <div *ngIf="isErrorShown" class="custom-margin">
         <div class="alert alert-danger" role="alert">
-          You are not registered in
+          {{errorMessage}}
         </div>
       </div>
 
