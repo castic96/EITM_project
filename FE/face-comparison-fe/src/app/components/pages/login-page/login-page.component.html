@@ -24,6 +24,14 @@
         <mat-spinner></mat-spinner>
       </div>
 
+      <!-- First name input -->
+      <div *ngIf="isEmailNeeded">
+        <mat-form-field>
+          <mat-label>Email:*</mat-label>
+          <input matInput placeholder="Email:*" [(ngModel)]="email" name="email">
+        </mat-form-field>
+      </div>
+
       <!-- Submit button -->
       <div>
         <a class="custom-margin" mat-raised-button color="accent" [disabled]="!showWebcam || isCameraError" (click)="triggerSnapshot()">Login</a>

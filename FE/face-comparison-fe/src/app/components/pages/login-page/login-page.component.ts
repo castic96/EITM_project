@@ -29,11 +29,15 @@ export class LoginPageComponent implements OnInit {
   public isErrorShown = false;
   public errorMessage = '';
   public isCameraError = false;
+  public isEmailNeeded = false;
+
+  email: string;
 
   constructor(private ipService: IpService, private queryService: QueryService,
               private userAuthenticatorService: UserAuthenticatorService,
               private router: Router) {
     this.ipAddress = '';
+    this.email = '';
   }
 
   ngOnInit(): void {
@@ -73,10 +77,24 @@ export class LoginPageComponent implements OnInit {
       this.ipAddress = '192.168.0.1';
     }
 
+    // if is email needed, then send it
+    let emailAddress;
+    if (this.isEmailNeeded) {
+      if (this.email === '' || this.email === null) {
+        this.showWebcam = true;
+        console.log('nezadana emailová adresa');
+        this.errorMessage = 'You have to fill email addres';
+        this.isErrorShown = true;
+        return;
+      }
+      emailAddress = this.email;
+    } else {
+      emailAddress = '';
+    }
+
     const loginRequest: LoginRequest = new LoginRequest(
                             this.webcamImage.imageAsBase64,
-                            this.ipAddress
-    );
+                            this.ipAddress, emailAddress);
 
     this.queryServiceSubscription$ = this.queryService.loginQuery(loginRequest).subscribe (data => {
       console.log('prichozi data: ' + data.status);
@@ -87,7 +105,12 @@ export class LoginPageComponent implements OnInit {
         this.userAuthenticatorService.logIn(loggedUser);
         this.router.navigate(['/secret']);
       } else {
-        this.errorMessage = 'You are not registered in.';
+        if (data.needEmail) {
+          this.isEmailNeeded = true;
+          this.errorMessage = 'There are two similar users in the system. Please enter your email address.';
+        } else {
+          this.errorMessage = 'You are not registered in.';
+        }
         this.isErrorShown = true;
         this.showWebcam = true;
       }
