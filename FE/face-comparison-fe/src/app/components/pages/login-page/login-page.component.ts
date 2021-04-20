@@ -52,7 +52,6 @@ export class LoginPageComponent implements OnInit {
   triggerSnapshot(): void {
     if (this.showWebcam) {
       this.trigger.next();
-      this.showWebcam = false;
     }
   }
 
@@ -81,7 +80,6 @@ export class LoginPageComponent implements OnInit {
     let emailAddress;
     if (this.isEmailNeeded) {
       if (this.email === '' || this.email === null) {
-        this.showWebcam = true;
         console.log('nezadana emailová adresa');
         this.errorMessage = 'You have to fill email addres';
         this.isErrorShown = true;
@@ -98,6 +96,7 @@ export class LoginPageComponent implements OnInit {
       emailAddress = '';
     }
 
+    this.showWebcam = false;
     const loginRequest: LoginRequest = new LoginRequest(
                             this.webcamImage.imageAsBase64,
                             this.ipAddress, emailAddress);
