@@ -9,7 +9,8 @@ public interface AuthenticateService {
      *
      * @param ipAddress IP address
      * @param image image in base64
+     * @param email email
      * @return login response
      */
-    LoginResponse authenticate(String ipAddress, String image);
+    LoginResponse authenticate(String ipAddress, String image, String email);
 }
