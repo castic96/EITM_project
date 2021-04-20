@@ -19,6 +19,9 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "email", unique = true)
+    private String email;
+
     @Column(name = "image")
     @Lob
     private String image; // in base64
@@ -32,9 +35,10 @@ public class User {
 
     public User() { }
 
-    public User(String firstName, String lastName, String image, String ipAddress) {
+    public User(String firstName, String lastName, String email, String image, String ipAddress) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
         this.image = image;
         this.ipAddress = ipAddress;
     }
@@ -61,6 +65,14 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Date getCreatedDate() {
@@ -93,6 +105,7 @@ public class User {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
                 ", image='" + image + '\'' +
                 ", ipAddress='" + ipAddress + '\'' +
                 ", createdDate=" + createdDate +

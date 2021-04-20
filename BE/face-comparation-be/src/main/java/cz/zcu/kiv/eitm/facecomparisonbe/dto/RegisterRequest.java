@@ -6,14 +6,17 @@ public class RegisterRequest {
     private String firstName;
     /** User's last name. */
     private String lastName;
+    /** User's e-mail address. */
+    private String email;
     /** Image as base64 string. */
     private String image;
     /** IP address. */
     private String ipAddress;
 
-    public RegisterRequest(String firstName, String lastName, String image, String ipAddress) {
+    public RegisterRequest(String firstName, String lastName, String email, String image, String ipAddress) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
         this.image = image;
         this.ipAddress = ipAddress;
     }
@@ -24,6 +27,10 @@ public class RegisterRequest {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getImage() {
@@ -39,6 +46,7 @@ public class RegisterRequest {
         return "RegisterRequest{" +
                 "firstname='" + firstName + '\'' +
                 ", lastname='" + lastName + '\'' +
+                ", email='" + email + '\'' +
                 ", ipAddress='" + ipAddress + '\'' +
                 '}';
     }

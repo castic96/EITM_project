@@ -35,8 +35,13 @@ public class AppController {
     @PostMapping("/register")
     public RegisterResponse register(@RequestBody RegisterRequest registerRequest) {
         LOG.info(registerRequest.toString());
-        this.userService.createUser(new User(registerRequest.getFirstName(), registerRequest.getLastName(), registerRequest.getImage(), registerRequest.getIpAddress()));
-        return new RegisterResponse(true, null); // todo případně dodělat kontrolu existující uživatele podle emailové adresy
+        List<User> users = this.userService.getUsersByEmail(registerRequest.getEmail());
+        if (users.size() > 0) {
+            return new RegisterResponse(false, "This e-mail address is already taken.");
+        }
+
+        this.userService.createUser(new User(registerRequest.getFirstName(), registerRequest.getLastName(), registerRequest.getEmail(), registerRequest.getImage(), registerRequest.getIpAddress()));
+        return new RegisterResponse(true, null);
     }
 
     /**
