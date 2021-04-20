@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
+import java.util.Base64;
 import java.util.List;
 
 public class AWSRekognitionUtil {
@@ -80,6 +81,18 @@ public class AWSRekognitionUtil {
         LOG.info("position = " + position.getLeft() + "," + position.getTop());
 
         return confidence;
+    }
+
+    /**
+     * Checks if image contains a face.
+     *
+     * @param image image
+     * @return true if image does contain a face; false otherwise
+     */
+    public boolean imageContainsFace(String image) {
+        ByteBuffer byteBufferImage = ByteBuffer.wrap(Base64.getDecoder().decode(image));
+        Float confidence = compareImages(byteBufferImage, byteBufferImage);
+        return confidence >= 0.0F;
     }
 
 }

@@ -7,6 +7,7 @@ import cz.zcu.kiv.eitm.facecomparisonbe.dto.RegisterResponse;
 import cz.zcu.kiv.eitm.facecomparisonbe.model.User;
 import cz.zcu.kiv.eitm.facecomparisonbe.service.AuthenticateService;
 import cz.zcu.kiv.eitm.facecomparisonbe.service.UserService;
+import cz.zcu.kiv.eitm.facecomparisonbe.utils.AWSRekognitionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,12 @@ public class AppController {
         List<User> users = this.userService.getUsersByEmail(registerRequest.getEmail());
         if (users.size() > 0) {
             return new RegisterResponse(false, "This e-mail address is already taken.");
+        }
+
+        AWSRekognitionUtil awsRekognitionUtil = new AWSRekognitionUtil();
+        boolean imageContainsFace = awsRekognitionUtil.imageContainsFace(registerRequest.getImage());
+        if (!imageContainsFace) {
+            return new RegisterResponse(false, "Image does not contain a face.");
         }
 
         this.userService.createUser(new User(registerRequest.getFirstName(), registerRequest.getLastName(), registerRequest.getEmail(), registerRequest.getImage(), registerRequest.getIpAddress()));
