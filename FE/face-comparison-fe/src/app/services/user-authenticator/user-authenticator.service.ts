@@ -7,7 +7,7 @@ import {User} from '../../domain/User';
 export class UserAuthenticatorService {
 
   private localStorageKey = 'loggedUser';
-  loggedUser: User = new User('', '', new Date());
+  loggedUser: User = new User('', '', new Date(), '');
   isLogged = false;
 
   constructor() {

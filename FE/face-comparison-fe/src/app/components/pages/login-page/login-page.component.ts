@@ -105,7 +105,7 @@ export class LoginPageComponent implements OnInit {
       console.log('prichozi data: ' + data.status);
       if (data.status) {
         this.isErrorShown = false;
-        const loggedUser = new User(data.firstName, data.lastName, new Date());
+        const loggedUser = new User(data.firstName, data.lastName, new Date(), this.email);
         console.log(loggedUser);
         this.userAuthenticatorService.logIn(loggedUser);
         this.router.navigate(['/secret']);

@@ -4,6 +4,7 @@
   <tr>
     <th scope="col">First name</th>
     <th scope="col">Last name</th>
+    <th scope="col">Email</th>
   </tr>
   </thead>
   <tbody>
@@ -11,6 +12,7 @@
   <tr *ngFor="let user of users">
     <td>{{user.firstName}}</td>
     <td>{{user.lastName}}</td>
+    <td>{{user.email}}</td>
   </tr>
   </tbody>
 </table>
