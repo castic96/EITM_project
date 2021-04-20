@@ -31,6 +31,7 @@ export class RegisterPageComponent implements OnInit {
 
   firstName: string;
   lastName: string;
+  email: string;
 
   constructor(private ipService: IpService, private queryService: QueryService,
               private userAuthenticatorService: UserAuthenticatorService,
@@ -38,6 +39,7 @@ export class RegisterPageComponent implements OnInit {
     this.ipAddress = '';
     this.firstName = '';
     this.lastName = '';
+    this.email = '';
   }
 
   ngOnInit(): void {
@@ -49,7 +51,10 @@ export class RegisterPageComponent implements OnInit {
   }
 
   triggerSnapshot(): void {
-    this.trigger.next();
+    if (this.showWebcam) {
+      this.trigger.next();
+      this.showWebcam = false;
+    }
   }
 
   // camera
@@ -88,24 +93,39 @@ export class RegisterPageComponent implements OnInit {
       this.isErrorShown = true;
       return;
     }
+    if (this.email === '' || this.email == null) {
+      console.log('nezadany email');
+      this.errorMessage = 'You have to fill email';
+      this.isErrorShown = true;
+      return;
+    }
+
     this.isErrorShown = false;
     this.showWebcam = false;
+
     const registerRequest: RegisterRequest = new RegisterRequest(
       this.firstName,
       this.lastName,
+      this.email,
       this.webcamImage.imageAsBase64,
       this.ipAddress
     );
 
     this.queryServiceSubscription$ = this.queryService.registerQuery(registerRequest).subscribe(data => {
       console.log('prichozi data: ' + data.status);
+
       if (data.status) {
         console.log('if vetev');
         this.router.navigate(['/', 'login']);
-      } else {
-        console.log('else vetev');
       }
+      else {
+        const errorMessage = data.errorMessage;
+        console.log('ERROR: ' + errorMessage);
 
+        this.errorMessage = errorMessage;
+        this.isErrorShown = true;
+        this.showWebcam = true;
+      }
     });
   }
 
