@@ -99,6 +99,12 @@ export class RegisterPageComponent implements OnInit {
       this.isErrorShown = true;
       return;
     }
+    if (this.isEmailAddress(this.email) === false) {
+      console.log('nevalidni email');
+      this.errorMessage = 'Email address is incorrect!';
+      this.isErrorShown = true;
+      return;
+    }
 
     this.isErrorShown = false;
     this.showWebcam = false;
@@ -158,6 +164,11 @@ export class RegisterPageComponent implements OnInit {
       console.warn('Problem with camera!');
       this.errorMessage = 'Problem with camera! Try reload the page.';
     }
+  }
+
+  public isEmailAddress(search: string): boolean {
+    const regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    return regexp.test(search);
   }
 
 }
